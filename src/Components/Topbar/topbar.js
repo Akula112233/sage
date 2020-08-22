@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import './topbar.css'
 
-export default class DiscussionsList extends Component {
+export default class Topbar extends Component {
     render() {
         return (
-            <div>
+            <div id="topbar">
                 
             </div>
         )
