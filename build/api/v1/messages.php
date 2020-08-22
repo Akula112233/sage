@@ -19,7 +19,7 @@ if (isset($_GET['room'])) {
 	}
 	
 	echo json_encode($messages);
-else {
+} else {
 	echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'No room specified'));
 }
 
