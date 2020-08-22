@@ -1,0 +1,7 @@
+#discussionRoomBodyContainer {
+    box-sizing: border-box;
+    width: 74%;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+}

@@ -13,9 +13,5 @@
   flex-direction: row;
   padding: 20px;
   box-sizing: border-box;
-}
-
-#discussionRoomBody {
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
 }

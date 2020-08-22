@@ -21,20 +21,13 @@ class DiscussionRoomBody extends Component {
     }
 
     render(){
-        let currentView = <ChatBody/>
-        if(this.state.selectedView === 1){
-            currentView = <VideoVoiceBody/>
-        }
-        else if(this.state.selectedView === 2){
-            currentView = <WhiteboardBody/>
-        }
         return (
-            <div>
+            <div id={'discussionRoomBodyContainer'}>
+                <SideBar buttonHandler={this.selectedViewSettingHandler}/>
                 <div>
-                    <SideBar buttonHandler={this.selectedViewSettingHandler}/>
-                </div>
-                <div>
-                    {currentView}
+                    <ChatBody currentRoomId={this.state.currentRoomId} displayed={this.state.selectedView === 0}/>
+                    <VideoVoiceBody currentRoomId={this.state.currentRoomId} displayed={this.state.selectedView === 1}/>
+                    <WhiteboardBody currentRoomId={this.state.currentRoomId} displayed={this.state.selectedView === 2}/>
                 </div>
             </div>
         );
