@@ -63,6 +63,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 		} else {
 			echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'No id or tags specified'));
 		}
+	} else {
+		echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
 	}
 } else {
 	echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
