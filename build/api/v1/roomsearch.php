@@ -74,7 +74,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id');
 			$stmt->execute();
 			
-			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id');
+			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
 			while ($row = $stmt->fetch()) {
 				$room = array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type'], 'tags'=>array());
