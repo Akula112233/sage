@@ -40,7 +40,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	} elseif (isset($response['id'])) {
 		if (isset($_POST['interests'])) {
 			$stmt = $conn->prepare('UPDATE users SET interests = :interests WHERE facebook_id = :facebook_id');
-			$success = $stmt->execute(array('facebook_id' => $response['id'], 'interests' => $_POST['interests']));
+			$success = $stmt->execute(array('facebook_id' => $response['id'], 'interests' => json_encode($_POST['interests'])));
 			
 			$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
 			
