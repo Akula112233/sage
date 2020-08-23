@@ -1,7 +1,5 @@
 <?php
 
-include_once(dirname(__DIR__).'/joinroom.php');
-
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
 $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
@@ -39,27 +37,15 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($response['error'])) {
 		echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
-		if (isset($_POST['user_id']) && isset($_POST['room_id'])) {
-			$room_id = $_POST['id'];
-			
-			$stmt = $conn->prepare('SELECT type, member_count, member_limit, creator_id FROM discussion_rooms WHERE id = :room_id AND creator_id = :creator_id LIMIT 0,1');
-			$stmt->execute(array('creator_id' => $response['id']));
-			
-			$success_out = array('success'=>false, 'error'=>true, 'error_message'=>'Invalid room or you are not the room creator');
-			
-			while ($row = $stmt->fetch()) {
-				if ($row['type'] == 1 && $row['member_count'] < $row['member_limit']) {
-					$success = JoinRoom($conn, $room_id, $_POST['user_id']);
-					
-					$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
-				} else {
-					$success_out = array('success'=>false, 'error'=>false, 'error_message'=>'');
-				}
-			}
+		if (isset($_POST['name']) && isset($_POST['interests'])) {
+			$stmt = $conn->prepare('INSERT INTO users (facebook_id, name, interests, avatar_url) VALUES (:facebook_id, :name, :interests, :url)');
+			$success = $stmt->execute(array('facebook_id' => $response['id'], 'name' => $_POST['name'], 'interests' => $_POST['interests'], 'url' => 'https://cdn.discordapp.com/attachments/746248118642671706/746988729029230652/SageIcon.png'));
+
+			$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
 			
 			echo json_encode($success_out);
 		} else {
-			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No user and/or room specified'));
+			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No user name and/or interests specified'));
 		}
 	} else {
 		echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
