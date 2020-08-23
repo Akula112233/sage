@@ -48,7 +48,8 @@ let templateState = {
         expirationTime: 20,
         lastActiveTime: 0,
         type: 0,
-        password: null
+        password: null,
+        tagList: []
     },
     loginCred : {
         accessToken: "",
