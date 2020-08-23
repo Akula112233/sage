@@ -61,7 +61,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			echo json_encode($rooms);
 		} elseif (isset($_GET['tags'])) {
 			$tags = $_GET['tags'];
-			echo $tags;
+			echo json_encode($tags);
 			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN (:tags) GROUP BY t.room_id');
 			$stmt->execute(array('tags' => implode(', ', array_map('mysql_real_escape_string', $tags))));
 			
