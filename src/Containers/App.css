@@ -26,6 +26,11 @@
   box-sizing: border-box;
 }
 
+#discussionRoomBody {
+  display: flex;
+  flex-direction: column;
+}
+
 .temp-screen {
   height: 100vh;
   width: 100vw;

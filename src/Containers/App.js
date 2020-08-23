@@ -9,7 +9,7 @@ import { store, loginUser } from '../Redux/redux'
 class App extends React.Component {
   constructor(props) {
     super(props)
-  
+
     this.state = {
       loggedIn: false
     }
@@ -36,7 +36,7 @@ class App extends React.Component {
           <div className="actual-app">
             <Topbar></Topbar>
             <div id="discussion-container">
-              <DiscussionListBody />
+              <DiscussionListBody></DiscussionListBody>
               <DiscussionRoomBody/>
             </div>
           </div>
@@ -57,9 +57,9 @@ class App extends React.Component {
         </div>
       )
     }
-    
+
   }
-  
+
 }
 
 export default App;
