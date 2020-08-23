@@ -62,7 +62,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 		} elseif (isset($_GET['tags'])) {
 			$tags = $_GET['tags'];
 			
-			echo $tags;
+			echo json_encode($tags);
 			
 			$escaped_tags = array();
 			
