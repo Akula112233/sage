@@ -25,6 +25,51 @@
     margin-right: 5px !important;
 }
 
+#tag-popover {
+    height: 40px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+}
+
+#tag-input {
+    border: none;
+    outline: none;
+    font-family: Cabin;
+    width: 100%;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+#tag-add {
+    position: absolute;
+    background-color: #48B1BF;
+    transition: background-color 0.5s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: none;
+    outline: none;
+    right: 10px;
+    color: white;   
+    border-radius: 10px;
+    width: 15px;
+    height: 15px;
+}
+
+#tag-add:hover {
+    background-color: #2a8996;
+}
+
+.MuiPaper-root {
+    border-radius: 25px !important;
+}
+
 ::-webkit-scrollbar {
     height: 5px;
 }

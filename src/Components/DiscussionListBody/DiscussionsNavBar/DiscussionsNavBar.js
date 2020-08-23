@@ -25,6 +25,8 @@ export default class DiscussionsNavBar extends Component {
             width: type === 0 ? document.getElementsByClassName("discussions-nav-item")[0].offsetWidth : document.getElementsByClassName("discussions-nav-item")[1].offsetWidth,
             top: type === 0 ? document.getElementsByClassName("discussions-nav-item")[0].offsetHeight/2 : document.getElementsByClassName("discussions-nav-item")[1].offsetHeight/2
         })
+
+        this.props.setPage(type)
     }
 
     render() {

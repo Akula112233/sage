@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './DiscussionItems.css'
 import './DiscussionItems.css'
 import { store, changeCurrentRoom } from '../../../../Redux/redux.js'
+import $ from 'jquery'
 
 export default class DiscussionItems extends Component {
     constructor(props) {
@@ -39,10 +40,11 @@ export default class DiscussionItems extends Component {
             tagList: this.props.tagList
         }
         store.dispatch(changeCurrentRoom(currentRoom))
+        console.log(store.getState())
     }
     
     render() {
-        if (this.props.type !== 0) {
+        if (this.props.type != 0) {
             if (this.state.selected) {
                 return (
                     <div className="item-container">
@@ -62,6 +64,7 @@ export default class DiscussionItems extends Component {
                                 <p className="item-nummembers">{this.props.currentNumMembers + "/" + this.props.memberLimit +" Members Online"}</p>
                             </div>
                         </div>
+                        <h2 style={{margin: "0", position: "absolute", right: "15px"}}>{">"}</h2>
                         <div style={{height: "1px", width: "100%", backgroundColor: "#EAECF3"}}></div>
                     </div>
                 )
@@ -82,6 +85,7 @@ export default class DiscussionItems extends Component {
                                 <p className="item-nummembers">{this.props.currentNumMembers + "/" + this.props.memberLimit +" Members Online"}</p>
                             </div>
                         </div>
+                        <h2 style={{margin: "0", position: "absolute", right: "15px"}}>{">"}</h2>
                         <div style={{height: "1px", width: "100%", backgroundColor: "#EAECF3"}}></div>
                     </div>
                 )
@@ -102,6 +106,7 @@ export default class DiscussionItems extends Component {
                             <p className="item-nummembers">{this.props.currentNumMembers + "/" + this.props.memberLimit +" Members Online"}</p>
                         </div>
                     </div>
+                    <h2 style={{margin: "0", position: "absolute", right: "15px"}}>{">"}</h2>
                     <div style={{height: "1px", width: "100%", backgroundColor: "#EAECF3"}}></div>
                 </div>
             )
@@ -118,6 +123,7 @@ export default class DiscussionItems extends Component {
                         <p className="item-nummembers">{this.props.currentNumMembers + "/" + this.props.memberLimit +" Members Online"}</p>
                     </div>
                 </div>
+                <h2 style={{margin: "0", position: "absolute", right: "15px"}}>{">"}</h2>
                 <div style={{height: "1px", width: "100%", backgroundColor: "#EAECF3"}}></div>
             </div>
         )

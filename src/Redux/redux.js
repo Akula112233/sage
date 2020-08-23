@@ -75,3 +75,22 @@ function modifyState(state = templateState, action) {
 }
 
 export let store = createStore(modifyState)
+
+
+export let setNewState = (arr) => {
+    return {
+        type: "SET_NEW_STATE",
+        arr
+    }
+}
+
+function tagState(state = [], action) {
+    switch(action.type) {
+        case "SET_NEW_STATE":
+            return action.arr
+        default:
+            return state
+    }
+}
+
+export let tagStore = createStore(tagState)
