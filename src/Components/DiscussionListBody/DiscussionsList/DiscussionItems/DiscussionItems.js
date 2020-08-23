@@ -17,7 +17,6 @@ export default class DiscussionItems extends Component {
         this.setState({
             selected: this.props.id === store.getState().currentRoom.id
         })
-        console.log(store.getState())
     }
 
     componentDidMount() {
@@ -36,7 +35,8 @@ export default class DiscussionItems extends Component {
             memberLimit: this.props.memberLimit,
             expirationTime: this.props.expirationTime,
             type: this.props.type,
-            password: this.props.password
+            password: this.props.password,
+            tagList: this.props.tagList
         }
         store.dispatch(changeCurrentRoom(currentRoom))
     }

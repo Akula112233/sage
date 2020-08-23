@@ -16,8 +16,6 @@ export default class DiscussionsList extends Component {
 
     componentDidMount() {
         // make database call here, map to discussion items
-        console.log(store.getState().loginCred.authResponse.accessToken, "test")
-
         $.ajax({
             type: "GET",
             url: "https://sageapp.tech/api/v1/rooms.php",
@@ -29,7 +27,6 @@ export default class DiscussionsList extends Component {
                 this.setState({
                     rooms: response.rooms  
                 })
-                console.log(this.state.rooms)
             }
         })
     }
@@ -49,6 +46,7 @@ export default class DiscussionsList extends Component {
                             currentNumMembers={roomItem.member_count}
                             memberLimit={roomItem.member_limit}
                             expirationTime={roomItem.expiration_time}
+                            tagList={roomItem.tags}
                         />
                     })
                 }
