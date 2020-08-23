@@ -10,6 +10,7 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
@@ -34,7 +35,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	curl_close($curl);
 	
 	if (isset($response['error'])) {
-		echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
+		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
 		if (isset($_GET['id'])) {
 			$room_id = $_GET['id'];
@@ -61,13 +62,13 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			
 			echo json_encode($rooms);
 		} else {
-			echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'No id or tags specified'));
+			echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'No id or tags specified'));
 		}
 	} else {
-		echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
+		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
 	}
 } else {
-	echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
+	echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
 }
 
 ?>

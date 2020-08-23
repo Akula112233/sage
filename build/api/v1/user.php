@@ -35,23 +35,28 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	curl_close($curl);
 	
 	if (isset($response['error'])) {
-		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
+		echo json_encode(array('user'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
-		$stmt = $conn->prepare('SELECT * FROM discussion_rooms WHERE (type IN (0, 1)) OR creator_id = :facebook_id');
-		$stmt->execute(array('facebook_id' => $response['id']));
-		
-		$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
-		
-		while ($row = $stmt->fetch()) {
-			array_push($rooms['rooms'], array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type']));
+		if (isset($_GET['id'])) {
+			$facebook_id = $_GET['id'];
+			$stmt = $conn->prepare('SELECT * FROM users WHERE facebook_id = :facebook_id LIMIT 0,1');
+			$stmt->execute(array('facebook_id' => $facebook_id));
+			
+			$user = array('error'=>false, 'error_message'=>'');
+			
+			while ($row = $stmt->fetch()) {
+				$user['user'] = array('facebook_id'=>$row['facebook_id'], 'name'=>$row['name'], 'avatar_url'=>$row['avatar_url']);
+			}
+			
+			echo json_encode($user);
+		} else {
+			echo json_encode(array('user'=>NULL, 'error'=>true, 'error_message'=>'No id or tags specified'));
 		}
-		
-		echo json_encode($rooms);
 	} else {
-		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
+		echo json_encode(array('user'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
 	}
 } else {
-	echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
+	echo json_encode(array('user'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
 }
 
 ?>

@@ -10,7 +10,6 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
@@ -35,7 +34,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	curl_close($curl);
 	
 	if (isset($response['error'])) {
-		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
+		echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
 		$stmt = $conn->prepare('SELECT * FROM discussion_rooms WHERE (type IN (0, 1)) OR creator_id = :facebook_id');
 		$stmt->execute(array('facebook_id' => $response['id']));
@@ -48,10 +47,10 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 		
 		echo json_encode($rooms);
 	} else {
-		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
+		echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
 	}
 } else {
-	echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
+	echo json_encode(array('messages'=>NULL, 'error'=>true, 'error_message'=>'No authorization given'));
 }
 
 ?>
