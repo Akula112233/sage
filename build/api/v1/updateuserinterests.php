@@ -38,7 +38,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($response['error'])) {
 		echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
-		if (isset($_POST['id']) && isset($_POST['interests'])) {
+		if (isset($_POST['interests'])) {
 			$stmt = $conn->prepare('UPDATE users SET interests = :interests WHERE facebook_id = :facebook_id');
 			$success = $stmt->execute(array('facebook_id' => $response['id'], 'interests' => $_POST['interests']));
 			
@@ -46,7 +46,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			
 			echo json_encode($success_out);
 		} else {
-			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No user and/or interests specified'));
+			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No interests specified'));
 		}
 	} else {
 		echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));
