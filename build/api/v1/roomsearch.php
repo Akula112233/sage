@@ -61,6 +61,9 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			echo json_encode($rooms);
 		} elseif (isset($_GET['tags'])) {
 			$tags = $_GET['tags'];
+			
+			echo $tags;
+			
 			$escaped_tags = array();
 			
 			foreach ($tags as $index=>$tag) {
