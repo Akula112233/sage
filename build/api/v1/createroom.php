@@ -67,7 +67,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			
 			echo json_encode($success_out);
 		} else {
-			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No room id specified'));
+			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No room name and/or room type specified'));
 		}
 	} else {
 		echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'Unknown Facebook error'));

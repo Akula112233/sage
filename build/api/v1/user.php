@@ -45,7 +45,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$user = array('error'=>false, 'error_message'=>'');
 			
 			while ($row = $stmt->fetch()) {
-				$user['user'] = array('facebook_id'=>$row['facebook_id'], 'name'=>$row['name'], 'avatar_url'=>$row['avatar_url']);
+				$user['user'] = array('facebook_id'=>$row['facebook_id'], 'name'=>$row['name'], 'avatar_url'=>$row['avatar_url'], 'interests'=>$row['interests']);
 			}
 			
 			echo json_encode($user);
