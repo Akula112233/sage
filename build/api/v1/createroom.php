@@ -2,6 +2,7 @@
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: authorization, Authorization, Accept, accept, Accept-Encoding");
 
 include_once(dirname(__DIR__).'/joinroom.php');
 
