@@ -68,15 +68,12 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 				$escaped_tags[$index] = $conn->quote($tag);
 			}
 			
-			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN (:tags) GROUP BY t.room_id');
-			$stmt->execute(array('tags' => implode(', ', $escaped_tags)));
+			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).') GROUP BY t.room_id');
+			$stmt->execute();
 			
-			echo 'SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).') GROUP BY t.room_id';
-			
-			$rooms = array('rooms'=>array('test1'=>'test1'), 'error'=>false, 'error_message'=>'');
+			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
 			while ($row = $stmt->fetch()) {
-				$rooms['rooms']['test2'] = 'test2';
 				$room = array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type'], 'tags'=>array());
 				
 				$stmt_2 = $conn->prepare('SELECT tag FROM room_tags WHERE room_id = :room_id');
