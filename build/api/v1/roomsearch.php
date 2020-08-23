@@ -79,7 +79,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 				$stmt_2 = $conn->prepare('SELECT tag FROM room_tags WHERE room_id = :room_id');
 				$stmt_2->execute(array('room_id' => $row['id']));
 				
-				while ($row_2 = $stms_2->fetch()) {
+				while ($row_2 = $stmt_2->fetch()) {
 					array_push($room['tags'], $row_2['tag']);
 				}
 				
