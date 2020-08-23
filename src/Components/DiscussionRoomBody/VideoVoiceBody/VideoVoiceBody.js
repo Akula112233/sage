@@ -17,13 +17,13 @@ const VideoVoiceBody = (props) => {
                 <div id={'textButton'}>
                     <Button
                         style={buttonStyle}
-                        startIcon={<svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18.0707 4.53H16.2407V13.035H4.3457V14.925C4.3457 15.4448 4.75745 15.87 5.2607 15.87H15.3257L18.9857 19.65V5.475C18.9857 4.95525 18.574 4.53 18.0707 4.53ZM14.4107 10.2V1.695C14.4107 1.17525 13.999 0.75 13.4957 0.75H1.6007C1.09745 0.75 0.685699 1.17525 0.685699 1.695V14.925L4.3457 11.145H13.4957C13.999 11.145 14.4107 10.7197 14.4107 10.2Z" fill="#3F4148"/>
+                        startIcon={<svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13.5451 4.5V1C13.5451 0.45 13.1154 0 12.5902 0H1.13167C0.606484 0 0.176788 0.45 0.176788 1V11C0.176788 11.55 0.606484 12 1.13167 12H12.5902C13.1154 12 13.5451 11.55 13.5451 11V7.5L17.3646 11.5V0.5L13.5451 4.5Z" fill="#3F4148"/>
                         </svg>
                         }
                         disabled
                     >
-                        Text
+                        Video
                     </Button>
                 </div>
                 <div style={{margin: '3px 7px 0 0'}}>
