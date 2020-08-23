@@ -1,5 +1,8 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header('Content-Type: application/json');
+
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
 $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';

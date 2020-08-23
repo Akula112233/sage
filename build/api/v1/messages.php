@@ -1,5 +1,8 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header('Content-Type: application/json');
+
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
 $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
@@ -8,10 +11,6 @@ $conn = new PDO($host, $user, $pass);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($_GET['room'])) {
