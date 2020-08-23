@@ -9,6 +9,7 @@ $conn = new PDO($host, $user, $pass);
 error_reporting(E_ALL);
 
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
