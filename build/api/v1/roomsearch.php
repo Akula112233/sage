@@ -9,12 +9,12 @@ $conn = new PDO($host, $user, $pass);
 error_reporting(E_ALL);
 
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
 	$auth_array = explode(" ", $auth);
 	[$user, $pass] = explode(":", base64_decode($auth_array[1]), 2);
-	
 	
 	$curl = curl_init();
 
