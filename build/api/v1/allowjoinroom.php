@@ -9,6 +9,7 @@ $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
 $conn = new PDO($host, $user, $pass);
 
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
