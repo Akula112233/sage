@@ -4,6 +4,7 @@ import ChatList from "./ChatList/ChatList";
 import SendBar from "./SendBar/SendBar";
 import Button from "@material-ui/core/Button";
 import {IconButton} from "@material-ui/core";
+import {store} from "../../../Redux/redux";
 
 const ChatBody = (props) => {
     let overallStyle = {display: "none", flexDirection: "column", height: '100%'}
@@ -39,7 +40,7 @@ const ChatBody = (props) => {
                 </div>
             </div>
             <div style={{padding: '10px 15px 0 15px', height: '100%'}}>
-                <ChatList/>
+                <ChatList currentStore={props.currentStore} currentRoom={props.currentRoom}/>
             </div>
             <SendBar/>
         </div>

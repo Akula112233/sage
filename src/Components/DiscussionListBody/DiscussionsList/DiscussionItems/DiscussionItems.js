@@ -42,7 +42,7 @@ export default class DiscussionItems extends Component {
     }
     
     render() {
-        if (this.props.type !== 0) {
+        if (this.props.type != 0) {
             if (this.state.selected) {
                 return (
                     <div className="item-container">
