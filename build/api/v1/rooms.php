@@ -6,6 +6,8 @@ $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
 
 $conn = new PDO($host, $user, $pass);
 
+header('Content-Type: application/json');
+
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
 	$auth_array = explode(" ", $auth);
