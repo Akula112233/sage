@@ -9,6 +9,7 @@ $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
 $conn = new PDO($host, $user, $pass);
 
 error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $table_columns = array('creator_id', 'description', 'discussion_name', 'member_count', 'member_limit', 'expiration_time', 'type', 'password');
 
@@ -58,6 +59,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$stmt_string .= $stmt_columns.') VALUES ('.$stmt_values.')';
 			
 			$stmt = $conn->prepare($stmt_string);
+			
+			unset($_POST[]);
 			
 			$success_1 = $stmt->execute($_POST);
 			
