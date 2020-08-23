@@ -45,19 +45,37 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
 			while ($row = $stmt->fetch()) {
-				array_push($room['rooms'], array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type']));
+				$room = array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type'], 'tags'=>array());
+				
+				$stmt_2 = $conn->prepare('SELECT tag FROM room_tags WHERE room_id = :room_id');
+				$stmt_2->execute(array('room_id' => $row['id']));
+				
+				while ($row_2 = $stms_2->fetch()) {
+					array_push($room['tags'], $row_2['tag']);
+				}
+				
+				array_push($rooms['rooms'], $room);
 			}
 			
 			echo json_encode($rooms);
 		} elseif (isset($_GET['tags'])) {
 			$tags = $_GET['tags'];
-			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN (:tags) AND ((r.type IN (0, 1)) OR r.creator_id = :facebook_id) GROUP BY t.room_id');
-			$stmt->execute(array('tags' => implode(', ', array_map('mysql_real_escape_string', $tags)), 'facebook_id' => $response['id']));
+			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN (:tags) AND r.type IN (0, 1) GROUP BY t.room_id');
+			$stmt->execute(array('tags' => implode(', ', array_map('mysql_real_escape_string', $tags))));
 			
 			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
 			while ($row = $stmt->fetch()) {
-				array_push($room['rooms'], array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type']));
+				$room = array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type'], 'tags'=>array());
+				
+				$stmt_2 = $conn->prepare('SELECT tag FROM room_tags WHERE room_id = :room_id');
+				$stmt_2->execute(array('room_id' => $row['id']));
+				
+				while ($row_2 = $stms_2->fetch()) {
+					array_push($room['tags'], $row_2['tag']);
+				}
+				
+				array_push($rooms['rooms'], $room);
 			}
 			
 			echo json_encode($rooms);
