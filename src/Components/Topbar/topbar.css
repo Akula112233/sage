@@ -1,0 +1,7 @@
+#topbar {
+    width: 100%;
+    min-height: 30px;
+    height: 5%;
+    max-height: 40px;
+    background-color: white;
+}
