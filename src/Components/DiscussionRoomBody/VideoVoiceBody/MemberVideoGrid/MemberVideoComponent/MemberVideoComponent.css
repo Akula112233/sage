@@ -1,0 +1,9 @@
+.memberVideoComponent {
+    min-width: 450px;
+    min-height: 340px;
+    width: 450px;
+    height: 340px;
+    background-color: lightgray;
+    border-radius: 20px;
+    margin: 10px
+}

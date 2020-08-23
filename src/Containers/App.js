@@ -3,12 +3,13 @@ import './App.css';
 import DiscussionListBody from '../Components/DiscussionListBody/DiscussionListBody'
 import Topbar from '../Components/Topbar/topbar'
 import { store, loginUser } from '../Redux/redux'
+import DiscussionRoomBody from "../Components/DiscussionRoomBody/DiscussionRoomBody";
 
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-  
+
     this.state = {
       loggedIn: false
     }
@@ -36,6 +37,7 @@ class App extends React.Component {
             <Topbar></Topbar>
             <div id="discussion-container">
               <DiscussionListBody></DiscussionListBody>
+              <DiscussionRoomBody/>
             </div>
           </div>
         </div>
@@ -55,9 +57,9 @@ class App extends React.Component {
         </div>
       )
     }
-    
+
   }
-  
+
 }
 
 export default App;

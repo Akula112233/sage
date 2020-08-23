@@ -1,0 +1,14 @@
+#discussionRoomBodyContainer {
+    box-sizing: border-box;
+    width: 74%;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+#discussionRoomActualBody {
+    width: 100%;
+    height: 100%;
+}
