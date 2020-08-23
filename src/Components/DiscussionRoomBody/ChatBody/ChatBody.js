@@ -8,7 +8,7 @@ import {IconButton} from "@material-ui/core";
 const ChatBody = (props) => {
     let overallStyle = {display: "none", flexDirection: "column", height: '100%'}
     if(props.displayed){
-        overallStyle = {display: "flex", flexDirection: "column", height: '100%'}
+        overallStyle.display = "flex"
     }
     let buttonStyle = {color: 'black', backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'black', fontFamily: 'Cabin', fontWeight: 'bold', width: '183px', margin: '15px 0 0 10px', justifyContent: 'left', padding: '5px 10px 5px 25px'}
     return (
