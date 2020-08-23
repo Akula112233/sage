@@ -1,79 +1,128 @@
 import React, {Component} from 'react';
 import './ChatList.css'
+import {store} from "../../../../Redux/redux";
+import $ from 'jquery'
 
 class ChatList extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            messagesArray: [
+                {
+                    sender_uid: 1,
+                    content: "Hello everyone! My name is author_id 1!",
+                    time_send: '7:48 PM',
+
+                },
+                {
+                    author_id: 2,
+                    content: "Hey12345",
+                    time_send: '7:48 PM',
+
+                },
+                {
+                    author_id: 2,
+                    content: "Hey12345",
+                    time_send: '7:48 PM',
+
+                },
+                {
+                    author_id: 2,
+                    content: "Hey12345",
+                    time_send: '7:48 PM',
+
+                },
+                {
+                    author_id: 2,
+                    content: "Hey12345",
+                    time_send: '7:48 PM',
+
+                },
+                {
+                    author_id: 3,
+                    content: "Hello hello! You're so coool!",
+                    time_send: '7:48 PM',
+
+                },
+                {
+                    author_id: 1,
+                    content: "Hello again everyone! My name is author_id 1!",
+                    time_send: '7:48 PM',
+
+                },
+            ]
+        }
     }
 
-    userId = 1//need to get from REDUX
+    userId = 0//this.props.currentStore.userInfo.userID//need to get from REDUX
 
     //messages Array below would normally be something like Api.getMessagesByRoomId(this.props.currentRoomId)
-    messagesArray = [
-        {
-            sender_uid: 1,
-            message: "Hello everyone! My name is sender_uid 1!",
-            time_stamp: '7:48 PM',
+    //messagesArray = //Api.getMessagesByRoomId(this.props.currentRoomId)
 
-        },
-        {
-            sender_uid: 2,
-            message: "Hey12345",
-            time_stamp: '7:48 PM',
-
-        },
-        {
-            sender_uid: 2,
-            message: "Hey12345",
-            time_stamp: '7:48 PM',
-
-        },
-        {
-            sender_uid: 2,
-            message: "Hey12345",
-            time_stamp: '7:48 PM',
-
-        },
-        {
-            sender_uid: 2,
-            message: "Hey12345",
-            time_stamp: '7:48 PM',
-
-        },
-        {
-            sender_uid: 3,
-            message: "Hello hello! You're so coool!",
-            time_stamp: '7:48 PM',
-
-        },
-        {
-            sender_uid: 1,
-            message: "Hello again everyone! My name is sender_uid 1!",
-            time_stamp: '7:48 PM',
-
-        },
-    ]//Api.getMessagesByRoomId(this.props.currentRoomId)
-
-    messageComponentsArray = this.messagesArray.map(message => {
-            let innerMessageStyle = {backgroundColor: '#48B1BF'};
-            if(message.sender_uid === this.userId) {
-                innerMessageStyle.backgroundColor = '#c0e9ef'
+    componentDidMount() {
+        $.ajax({
+            type: "GET",
+            url: "https://sageapp.tech/api/v1/messages.php?room=" + this.props.currentRoom.id,
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Basic " + btoa(store.getState().loginCred.authResponse.accessToken + ":" + ""));
+            },
+            success: (response) => {
+                console.log(response)
+                this.setState({
+                    messagesArray: response.messages
+                })
+            },
+            error: (response) => {
+                console.log(response, 'if messages error')
             }
-            return(
-                <div id={'outerMessage'}>
-                    <p style={{margin: 0}}>{"Margaret" + message.sender_uid + " " + message.time_stamp}</p>  {/* This would normally have the actual user, given probably in a database call */}
-                    <div id={'innerMessage'} style={innerMessageStyle}>
-                        <p style={{margin: 0, padding: 0}}>{message.message}</p>
-                    </div>
-                </div>
-            )
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.currentRoom.id !== this.props.currentRoom.id){
+            $.ajax({
+                type: "GET",
+                url: "https://sageapp.tech/api/v1/messages.php?room=" + this.props.currentRoom.id,
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(store.getState().loginCred.authResponse.accessToken + ":" + ""));
+                },
+                success: (response) => {
+                    console.log(response)
+                    this.setState({
+                        messagesArray: response.messages
+                    })
+                },
+                error: (response) => {
+                    console.log(response, 'if messages error')
+                }
+            })
         }
-    )
+    }
 
     render() {
+        console.log(this.state.messagesArray)
+        let messageComponentsArray = this.state.messagesArray.map(message => {
+                let innerMessageStyle = {backgroundColor: '#48B1BF'};
+                if(message.author_id !== store.getState().loginCred.authResponse.userID) {
+                    innerMessageStyle.backgroundColor = '#c0e9ef'
+                }
+                return(
+                    <div id={'outerMessage'}>
+                        <p style={{margin: 0}}>{message.author_id + " "}</p>  {/* This would normally have the actual user, given probably in a database call */}
+                        <div id={'innerMessage'} style={innerMessageStyle}>
+                            <p style={{margin: 0, padding: 0}}>{message.content}</p>
+                        </div>
+                    </div>
+                )
+            }
+        )
+        console.log('whole store', this.props.currentStore)
+
         return (
             <div>
-                {this.messageComponentsArray}
+                {messageComponentsArray}
             </div>
         );
     }
