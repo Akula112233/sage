@@ -14,6 +14,7 @@ const port = process.env.PORT || 8000
 const app = express()
 app.use(index)
 
+const server = https.createServer(options, app)
 const io = socketIo(server)
 
 io.on('connection', (socket) => {
