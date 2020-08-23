@@ -86,15 +86,13 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$like_string = '';
 			
 			foreach ($tags as $index=>$tag) {
-				$escaped_tag = $conn->quote($tag);
-				$escaped_tags[$index] = $escaped_tag;
-				$like_string .= " OR r.name LIKE %$escaped_tag% OR r.description LIKE %$escaped_tag%";
+				$escaped_tags[$index] = $conn->quote($tag);
+				$escaped_tag = $conn->quote('%'.$tag.'%');
+				$like_string .= " OR r.name LIKE $escaped_tag OR r.description LIKE $escaped_tag"
 			}
 			
 			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id');
 			$stmt->execute();
-			
-			echo 'SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id';
 			
 			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
