@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import DiscussionListBody from '../Components/DiscussionListBody/DiscussionListBody'
+import DiscussionRoomBody from '../Components/DiscussionRoomBody/DiscussionRoomBody'
 import Topbar from '../Components/Topbar/topbar'
 import { store, loginUser } from '../Redux/redux'
-import DiscussionRoomBody from "../Components/DiscussionRoomBody/DiscussionRoomBody";
 
 
 class App extends React.Component {
