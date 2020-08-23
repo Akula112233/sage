@@ -9,10 +9,10 @@ $conn = new PDO($host, $user, $pass);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Credentials: true");
+header('Content-Type: application/json');
 
 function JoinRoom($connection, $room_id, $facebook_id) {
 	$stmt = $connection->prepare('SELECT * FROM allowed_ids WHERE room_id = :room_id AND facebook_id = :facebook_id LIMIT 0,1');
