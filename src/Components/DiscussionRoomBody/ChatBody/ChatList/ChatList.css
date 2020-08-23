@@ -1,0 +1,17 @@
+#outerMessage {
+    color: #1C375B;
+    font-size: 12px;
+    font-family: "Roboto Light", sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+#innerMessage {
+    background-color: #2C2929;
+    font-family: 'Cabin';
+    font-size: 15px;
+    border-radius: 0 20px 20px 20px;
+    padding: 15px 15px 15px 10px;
+}

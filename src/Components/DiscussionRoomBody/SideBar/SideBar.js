@@ -15,7 +15,7 @@ class SideBar extends Component{
     ///Stuff that I need to replace with props***********************
     numMembersActive = 12//this.props.numMembersActive
     maxNumMembers = 20//this.props.maxNumMembers
-    tagNames = ['tag1', 'tag2', 'tag3', 'tag4', "tag1", "tag1"]//this.props.tagNames,
+    tagNames = ['basketball', 'sports', 'yes', 'soccer', 'biology']//this.props.tagNames,
     roomTitle = 'Test Room 1' //this.props.roomTitle,
     roomDescription = 'This is a test room 1 with multiple tags in it for testing.' //this.props.roomDescription
 
@@ -33,12 +33,6 @@ class SideBar extends Component{
         }
         return buttonStyle
     }
-    buttons = [
-        {
-            buttonTitle: Text,
-
-        },
-    ]
 
     render(){
         return (

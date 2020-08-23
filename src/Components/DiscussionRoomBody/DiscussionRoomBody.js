@@ -14,9 +14,9 @@ class DiscussionRoomBody extends Component {
         }
     }
 
-    selectedViewSettingHandler = (selectedView) => {
+    selectedViewSettingHandler = (newSelectedView) => {
         this.setState({
-            selectedView: selectedView
+            selectedView: newSelectedView
         })
     }
 
@@ -24,7 +24,7 @@ class DiscussionRoomBody extends Component {
         return (
             <div id={'discussionRoomBodyContainer'}>
                 <SideBar buttonHandler={this.selectedViewSettingHandler}/>
-                <div>
+                <div id={'discussionRoomActualBody'}>
                     <ChatBody currentRoomId={this.state.currentRoomId} displayed={this.state.selectedView === 0}/>
                     <VideoVoiceBody currentRoomId={this.state.currentRoomId} displayed={this.state.selectedView === 1}/>
                     <WhiteboardBody currentRoomId={this.state.currentRoomId} displayed={this.state.selectedView === 2}/>
