@@ -2,6 +2,7 @@
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: authorization, Authorization, Accept, accept, Accept-Encoding");
 
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
