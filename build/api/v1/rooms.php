@@ -38,13 +38,22 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($response['error'])) {
 		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
-		$stmt = $conn->prepare('SELECT * FROM discussion_rooms WHERE (type IN (0, 1)) OR creator_id = :facebook_id');
+		$stmt = $conn->prepare('SELECT * FROM discussion_rooms WHERE (type IN (0, 1))');
 		$stmt->execute(array('facebook_id' => $response['id']));
 		
 		$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 		
 		while ($row = $stmt->fetch()) {
-			array_push($rooms['rooms'], array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type']));
+			$room = array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type'], 'tags'=>array());
+			
+			$stmt_2 = $conn->prepare('SELECT tag FROM room_tags WHERE room_id = :room_id');
+			$stmt_2->execute(array('room_id' => $row['id']));
+			
+			while ($row_2 = $stms_2->fetch()) {
+				array_push($room['tags'], $row_2['tag']);
+			}
+			
+			array_push($rooms['rooms'], $room);
 		}
 		
 		echo json_encode($rooms);

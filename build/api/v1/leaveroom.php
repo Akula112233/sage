@@ -6,16 +6,6 @@ $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
 
 $conn = new PDO($host, $user, $pass);
 
-function JoinRoom($connection, $room_id, $facebook_id) {
-	$stmt = $connection->prepare('INSERT INTO allowed_ids (room_id, facebook_id) VALUES (:room_id, :facebook_id)');
-	$success_1 = $stmt->execute(array('room_id' => $room_id, 'facebook_id' => $facebook_id));
-	
-	$stmt = $connection->prepare('UPDATE discussion_rooms SET member_count = member_count + 1 WHERE id = :room_id');
-	$success_2 = $stmt->execute(array('room_id' => $room_id));
-	
-	return $success_1 && $success_2;
-}
-
 error_reporting(E_ALL);
 
 header('Content-Type: application/json');
@@ -50,24 +40,20 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 		if (isset($_POST['id'])) {
 			$room_id = $_POST['id'];
 			
-			$stmt = $conn->prepare('SELECT type, password, member_count, member_limit FROM discussion_rooms WHERE id = :room_id LIMIT 0,1');
-			$stmt->execute(array('room_id' => $room_id));
+			$stmt = $conn->prepare('SELECT * FROM allowed_ids WHERE facebook_id = :facebook_id AND room_id = :room_id LIMIT 0,1');
+			$stmt->execute(array('room_id' => $room_id, 'facebook_id' => $response['id']));
+			
+			$sucess_1 = true;
 			
 			while ($row = $stmt->fetch()) {
-				$required_password = $row['type'] == 2;
-				
-				if ((!$required_password || (isset($_POST['password']) && $_POST['password'] == $row['password'])) && $row['member_count'] < $row['member_limit']) {
-					$success = JoinRoom($conn, $room_id, $response['id']);
-					
-					$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
-				} else {
-					$success_out = array('success'=>false, 'error'=>false, 'error_message'=>'');
-				}
-				
-				echo json_encode($success_out);
+				$stmt_2 = $connection->prepare('UPDATE discussion_rooms SET member_count = member_count - 1 WHERE id = :room_id');
+				$success_1 = $stmt_2->execute(array('room_id' => $room_id));
 			}
 			
+			$stmt = $conn->prepare('DELETE * FROM allowed_ids WHERE room_id = :room_id AND facebook_id = :facebook_id');
+			$success_2 = $stmt->execute(array('room_id' => $room_id, 'facebook_id' => $response['id']));
 			
+			$success_out = array('success'=>$success_1 && $success_2, 'error'=>false, 'error_message'=>'');
 		} else {
 			echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'No room id specified'));
 		}

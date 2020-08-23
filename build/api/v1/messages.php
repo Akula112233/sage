@@ -49,7 +49,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 				$messages['error'] = false;
 				$messages['error_message'] = '';
 				
-				$stmt_2 = $conn->prepare('SELECT * FROM messages WHERE discussion_room_id = :room_id');
+				$stmt_2 = $conn->prepare('SELECT m.*, u.* FROM messages m JOIN users u ON m.author_id = u.facebook_id WHERE discussion_room_id = :room_id');
 				$stmt_2->execute(array('room_id' => $room));
 				
 				while ($row_2 = $stmt_2->fetch()) {
