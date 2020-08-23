@@ -1,9 +1,12 @@
 .item-container {
     display: flex;
     flex-direction: column;
-    height: 10%;
-    min-height: 10%;
+    height: 15%;
+    min-height: 15%;
     width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    justify-content: center;
 }
 
 .item-guts-container {
@@ -11,7 +14,6 @@
     height: 100%;
     display: flex;
     flex-direction: row;
-    position: relative;
     align-items: center;
 }
 

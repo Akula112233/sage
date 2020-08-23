@@ -4,6 +4,7 @@ import DiscussionListBody from '../Components/DiscussionListBody/DiscussionListB
 import DiscussionRoomBody from '../Components/DiscussionRoomBody/DiscussionRoomBody'
 import Topbar from '../Components/Topbar/topbar'
 import { store, loginUser } from '../Redux/redux'
+import $ from 'jquery'
 
 
 class App extends React.Component {
@@ -15,11 +16,40 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.FB.getLoginStatus(function(response) {
+      if (response) {
+        if(response.status === 'connected') {
+          this.setState({
+            loggedIn: true
+          })
+        }
+      }
+    })
+  }
+
   handleClick = () => {
     // open facebook modal
     window.FB.login((response) => {
       if (response.status === "connected") {
         store.dispatch(loginUser(response))
+          $.get("https://graph.facebook.com/me?access_token=" + store.getState().loginCred.authResponse.accessToken, function(data) {
+            $.ajax({
+              type: "POST",
+              url: "https://sageapp.tech/api/v1/createuser.php",
+              dataType: 'json',
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader("Authorization", "Basic " + btoa(store.getState().loginCred.authResponse.accessToken + ":"));
+              },
+              data: {
+                name: data.name
+              },
+              success: (response) => {
+                console.log("created user successfully!: ", response)
+              }
+          })
+        })
+
         this.setState({
           loggedIn: true
         })
@@ -36,7 +66,7 @@ class App extends React.Component {
           <div className="actual-app">
             <Topbar></Topbar>
             <div id="discussion-container">
-              <DiscussionListBody></DiscussionListBody>
+              <DiscussionListBody />
               <DiscussionRoomBody/>
             </div>
           </div>
