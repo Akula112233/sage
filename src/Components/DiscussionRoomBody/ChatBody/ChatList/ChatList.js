@@ -60,6 +60,18 @@ class ChatList extends Component {
     //messagesArray = //Api.getMessagesByRoomId(this.props.currentRoomId)
 
     componentDidMount() {
+        this.props.socket.on('new message', (msg, author) => {
+            let temp = [...this.state.messagesArray]
+            temp.push({
+                sender_uid: author,
+                content: message,
+                time_send: ""
+            })
+        })
+
+
+
+
         $.ajax({
             type: "GET",
             url: "https://sageapp.tech/api/v1/messages.php?room=" + this.props.currentRoom.id,
@@ -100,6 +112,7 @@ class ChatList extends Component {
             })
         }
     }
+
 
     render() {
         console.log(this.state.messagesArray)

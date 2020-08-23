@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import {IconButton, TextField} from "@material-ui/core";
+import { store } from '../../../../Redux/redux'
 import './SendBar.css'
 
 class SendBar extends Component {
-    state = {
-        fieldValue: ""
+    constructor(props) {
+        super(props)
+    
+        this.state = { 
+            fieldValue: ""
+        }
     }
-
+    
     sendMessageHandler = () => {
-        console.log(this.state.fieldValue)
+        // console.log(this.state.fieldValue)
+        this.props.socket.emit('new message', this.state.fieldValue, store.getState().loginCred.authResponse.userID)
         this.setState({fieldValue: ""})
     }
 
