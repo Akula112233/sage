@@ -40,7 +40,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	} elseif (isset($response['id'])) {
 		if (isset($_POST['name'])) {
 			if (!isset($_POST['interests'])) {
-				$_POST['interests'] = array();
+				$_POST['interests'] = '[]';
 			}
 			
 			$stmt = $conn->prepare('INSERT INTO users (facebook_id, name, interests, avatar_url) VALUES (:facebook_id, :name, :interests, :url)');
