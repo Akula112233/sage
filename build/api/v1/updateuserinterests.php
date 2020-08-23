@@ -1,7 +1,7 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
@@ -39,7 +39,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	} elseif (isset($response['id'])) {
 		if (isset($_POST['id']) && isset($_POST['interests'])) {
 			$stmt = $conn->prepare('UPDATE users SET interests = :interests WHERE facebook_id = :facebook_id');
-			$success $stmt->execute(array('facebook_id' => $response['id'], 'interests' => $_POST['interests']));
+			$success = $stmt->execute(array('facebook_id' => $response['id'], 'interests' => $_POST['interests']));
 			
 			$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
 			
