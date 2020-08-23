@@ -43,7 +43,7 @@ class App extends React.Component {
               },
               data: {
                 name: data.name
-              },      
+              },
               success: (response) => {
                 console.log("created user successfully!: ", response)
               }
@@ -66,7 +66,7 @@ class App extends React.Component {
           <div className="actual-app">
             <Topbar></Topbar>
             <div id="discussion-container">
-              <DiscussionListBody></DiscussionListBody>
+              <DiscussionListBody />
               <DiscussionRoomBody/>
             </div>
           </div>
