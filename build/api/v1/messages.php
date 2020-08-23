@@ -54,7 +54,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 				$stmt_2->execute(array('room_id' => $room));
 				
 				while ($row_2 = $stmt_2->fetch()) {
-					array_push($messages['messages'], array('id'=>$row_2['id'], 'discussion_room_id'=>$row_2['discussion_room_id'], 'author_id'=>$row_2['author_id'], 'content'=>$row_2['content'], 'time_sent'=>$row_2['time_sent']));
+					array_push($messages['messages'], array('id'=>$row_2['id'], 'discussion_room_id'=>$row_2['discussion_room_id'], 'author_id'=>$row_2['author_id'], 'author_name'=>$row_2['name'], 'content'=>$row_2['content'], 'time_sent'=>$row_2['time_sent']));
 				}
 			}
 			
