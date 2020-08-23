@@ -94,6 +94,8 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id');
 			$stmt->execute();
 			
+			echo 'SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id';
+			
 			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
 			while ($row = $stmt->fetch()) {
