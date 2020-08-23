@@ -10,6 +10,7 @@ error_reporting(E_ALL);
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($_GET['room'])) {
