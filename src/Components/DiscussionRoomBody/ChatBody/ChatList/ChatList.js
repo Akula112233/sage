@@ -60,12 +60,16 @@ class ChatList extends Component {
     //messagesArray = //Api.getMessagesByRoomId(this.props.currentRoomId)
 
     componentDidMount() {
-        this.props.socket.on('new message', (msg, author) => {
+        this.props.socket.on('new message', (msg) => {
+            console.log(msg)
             let temp = [...this.state.messagesArray]
             temp.push({
-                sender_uid: author,
-                content: message,
+                sender_uid: msg.author,
+                content: msg.message,
                 time_send: ""
+            })
+            this.setState({
+                messagesArray: temp
             })
         })
 

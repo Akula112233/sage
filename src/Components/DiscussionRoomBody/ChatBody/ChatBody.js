@@ -7,22 +7,17 @@ import {IconButton} from "@material-ui/core";
 import {store} from "../../../Redux/redux";
 
 import socketIOClient from 'socket.io-client'
-const ENDPOINT = 'https://sageapp.tech:8000/'
+const ENDPOINT = 'localhost:8000/'
 
 class ChatBody extends React.Component {
     constructor(props) {
         super(props)
-        this.socket = undefined;
-    }
-
-    componentDidMount() {
         this.socket = socketIOClient(ENDPOINT)
     }
-    
 
     render() {
         let overallStyle = {display: "none", flexDirection: "column", height: '100%'}
-        if(props.displayed){
+        if(this.props.displayed){
             overallStyle.display = "flex"
         }
         let buttonStyle = {color: 'black', backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'black', fontFamily: 'Cabin', fontWeight: 'bold', width: '183px', margin: '15px 0 0 10px', justifyContent: 'left', padding: '5px 10px 5px 25px'}
@@ -54,7 +49,7 @@ class ChatBody extends React.Component {
                     </div>
                 </div>
                 <div style={{padding: '10px 15px 0 15px', height: '100%'}}>
-                    <ChatList socket={this.socket} currentStore={props.currentStore} currentRoom={props.currentRoom}/>
+                    <ChatList socket={this.socket} currentStore={this.props.currentStore} currentRoom={this.props.currentRoom}/>
                 </div>
                 <SendBar socket={this.socket}/>
             </div>
