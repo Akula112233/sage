@@ -4,6 +4,7 @@ import ChatBody from "./ChatBody/ChatBody";
 import VideoVoiceBody from "./VideoVoiceBody/VideoVoiceBody";
 import WhiteboardBody from "./WhiteboardBody/WhiteboardBody";
 import './DiscussionRoomBody.css'
+import {store} from "../../Redux/redux";
 
 class DiscussionRoomBody extends Component {
     constructor(props) {
@@ -12,7 +13,18 @@ class DiscussionRoomBody extends Component {
             currentRoomId: 1,
             selectedView: 0,
         }
+        this.unsubscribe = undefined
     }
+
+    storeChanger = () => {
+        console.log(store.getState())
+    }
+
+    componentDidMount() {
+        console.log(store.getState(), ";lksjg;lkdj;lghwjlghfkg")
+        this.unsubscribe = store.subscribe(this.storeChanger)
+    }
+
 
     selectedViewSettingHandler = (newSelectedView) => {
         this.setState({
