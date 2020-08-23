@@ -67,14 +67,19 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$stmt = $conn->prepare('SELECT type, password, member_count, member_limit FROM discussion_rooms WHERE id = :room_id LIMIT 0,1');
 			$stmt->execute(array('room_id' => $room_id));
 			
-			$success_out = array('success'=>false, 'error'=>false, 'error_message'=>'');
+			$success_out = array('success'=>false, 'error'=>true, 'error_message'=>'Invalid room');
 			
 			while ($row = $stmt->fetch()) {
-				
-				if (($row['type'] == 0 || ($row['type'] == 2 && (isset($_POST['password']) && $_POST['password'] == $row['password']))) && $row['member_count'] < $row['member_limit']) {
-					$success = JoinRoom($conn, $room_id, $response['id']);
-					
-					$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
+				if (($row['type'] == 0 || ($row['type'] == 2 && (isset($_POST['password']) && $_POST['password'] == $row['password']))) {
+					if ($row['member_count'] < $row['member_limit']) {
+						$success = JoinRoom($conn, $room_id, $response['id']);
+						
+						$success_out = array('success'=>$success, 'error'=>false, 'error_message'=>'');
+					} else {
+						$success_out = array('success'=>false, 'error'=>true, 'error_message'=>'Room is full');
+					}
+				} elseif ($row['type'] == 2) {
+					$success_out = array('success'=>false, 'error'=>true, 'error_message'=>'Password is incorrect');
 				}
 			}
 			
