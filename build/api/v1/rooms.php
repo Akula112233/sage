@@ -38,7 +38,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($response['error'])) {
 		echo json_encode(array('rooms'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
-		$stmt = $conn->prepare('SELECT * FROM discussion_rooms WHERE (type IN (0, 1))');
+		$stmt = $conn->prepare('SELECT * FROM discussion_rooms');
 		$stmt->execute(array('facebook_id' => $response['id']));
 		
 		$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
