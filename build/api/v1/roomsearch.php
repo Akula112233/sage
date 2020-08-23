@@ -1,16 +1,6 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-	header('Access-Control-Allow-Origin: *');
-	header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
-	header('Access-Control-Allow-Headers: Authorization, Accept, Accept-Encoding, Content-Type');
-	header('Access-Control-Max-Age: 1728000');
-	header('Content-Length: 0');
-	header('Content-Type: text/plain');
-	die();
-}
-
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
 
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
@@ -97,7 +87,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			foreach ($tags as $index=>$tag) {
 				$escaped_tags[$index] = $conn->quote($tag);
 				$escaped_tag = $conn->quote('%'.$tag.'%');
-				$like_string .= " OR r.name LIKE $escaped_tag OR r.description LIKE $escaped_tag"
+				$like_string .= " OR r.name LIKE $escaped_tag OR r.description LIKE $escaped_tag";
 			}
 			
 			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id');
