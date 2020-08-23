@@ -30,12 +30,6 @@ function JoinRoom($connection, $room_id, $facebook_id) {
 	return $success_1 && $success_2;
 }
 
-error_reporting(E_ALL);
-
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
 	$auth_array = explode(" ", $auth);

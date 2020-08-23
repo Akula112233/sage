@@ -59,29 +59,9 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			}
 			
 			echo json_encode($rooms);
-		} elseif (isset($_GET['name'])) {
-			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r WHERE r.discussion_name LIKE :name');
+		} elseif (isset($_GET['keyword'])) {
+			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r WHERE r.discussion_name LIKE %:name%');
 			$stmt->execute(array('name' => $_GET['name']));
-			
-			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
-			
-			while ($row = $stmt->fetch()) {
-				$room = array('id'=>$row['id'], 'creator_id'=>$row['creator_id'], 'description'=>$row['description'], 'discussion_name'=>$row['discussion_name'], 'member_count'=>$row['member_count'], 'member_limit'=>$row['member_limit'], 'expiration_time'=>$row['expiration_time'], 'last_active_time'=>$row['last_active_time'], 'type'=>$row['type'], 'tags'=>array());
-				
-				$stmt_2 = $conn->prepare('SELECT tag FROM room_tags WHERE room_id = :room_id');
-				$stmt_2->execute(array('room_id' => $row['id']));
-				
-				while ($row_2 = $stms_2->fetch()) {
-					array_push($room['tags'], $row_2['tag']);
-				}
-				
-				array_push($rooms['rooms'], $room);
-			}
-			
-			echo json_encode($rooms);
-		} elseif (isset($_GET['description'])) {
-			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r WHERE r.description LIKE :description');
-			$stmt->execute(array('description' => $_GET['description']));
 			
 			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
 			
@@ -103,12 +83,15 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$tags = $_GET['tags'];
 			
 			$escaped_tags = array();
+			$like_string = '';
 			
 			foreach ($tags as $index=>$tag) {
-				$escaped_tags[$index] = $conn->quote(strtoupper($tag));
+				$escaped_tag = $conn->quote($tag);
+				$escaped_tags[$index] = $escaped_tag;
+				$like_string .= " OR r.name LIKE %$escaped_tag% OR r.description LIKE %$escaped_tag%";
 			}
 			
-			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).') GROUP BY t.room_id');
+			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN ('.implode(', ', $escaped_tags).')'.$like_string.' GROUP BY r.id');
 			$stmt->execute();
 			
 			$rooms = array('rooms'=>array(), 'error'=>false, 'error_message'=>'');
