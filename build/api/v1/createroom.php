@@ -1,5 +1,8 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header('Content-Type: application/json');
+
 include_once(dirname(__DIR__).'/joinroom.php');
 
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
@@ -12,10 +15,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $table_columns = array('creator_id', 'description', 'discussion_name', 'member_count', 'member_limit', 'expiration_time', 'type', 'password');
-
-header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
 
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	$auth = $_SERVER["HTTP_AUTHORIZATION"];
