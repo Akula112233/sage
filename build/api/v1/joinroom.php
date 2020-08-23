@@ -6,6 +6,10 @@ $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
 
 $conn = new PDO($host, $user, $pass);
 
+header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+
 function JoinRoom($connection, $room_id, $facebook_id) {
 	$stmt = $connection->prepare('SELECT * FROM allowed_ids WHERE room_id = :room_id AND facebook_id = :facebook_id LIMIT 0,1');
 	$stmt->execute(array('room_id' => $room_id, 'facebook_id' => $facebook_id));
