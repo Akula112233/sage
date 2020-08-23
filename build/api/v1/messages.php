@@ -6,6 +6,8 @@ $pass = 'IHATEPASSWORD3052984059ANGRY!!!!!!!(#)$#';
 
 $conn = new PDO($host, $user, $pass);
 
+header('Content-Type: application/json');
+
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($_GET['room'])) {
 		$auth = $_SERVER["HTTP_AUTHORIZATION"];
@@ -40,7 +42,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$messages = array('messages'=>array(), 'error'=>true, 'error_message'=>'This user is not allowed to view this room');
 			
 			while ($row = $stmt->fetch()) {
-				$messages['error'] = false
+				$messages['error'] = false;
 				$messages['error_message'] = '';
 				
 				$stmt_2 = $conn->prepare('SELECT * FROM messages WHERE discussion_room_id = :room_id');
