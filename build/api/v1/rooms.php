@@ -31,7 +31,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 		CURLOPT_CUSTOMREQUEST => "GET",
 	));
 
-	$response = json_decode(curl_exec($curl));
+	$response = json_decode(curl_exec($curl), true);
 
 	curl_close($curl);
 	
