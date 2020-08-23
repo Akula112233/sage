@@ -38,7 +38,11 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 	if (isset($response['error'])) {
 		echo json_encode(array('success'=>NULL, 'error'=>true, 'error_message'=>'Error getting Facebook info: '.$response['error']['message']));
 	} elseif (isset($response['id'])) {
-		if (isset($_POST['name']) && isset($_POST['interests'])) {
+		if (isset($_POST['name'])) {
+			if (!isset($_POST['interests'])) {
+				$_POST['interests'] = array();
+			}
+			
 			$stmt = $conn->prepare('INSERT INTO users (facebook_id, name, interests, avatar_url) VALUES (:facebook_id, :name, :interests, :url)');
 			$success = $stmt->execute(array('facebook_id' => $response['id'], 'name' => $_POST['name'], 'interests' => $_POST['interests'], 'url' => 'https://cdn.discordapp.com/attachments/746248118642671706/746988729029230652/SageIcon.png'));
 
