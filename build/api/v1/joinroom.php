@@ -1,7 +1,7 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
@@ -63,7 +63,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$success_out = array('success'=>false, 'error'=>true, 'error_message'=>'Invalid room');
 			
 			while ($row = $stmt->fetch()) {
-				if (($row['type'] == 0 || ($row['type'] == 2 && (isset($_POST['password']) && $_POST['password'] == $row['password']))) {
+				if ($row['type'] == 0 || ($row['type'] == 2 && isset($_POST['password']) && $_POST['password'] == $row['password'])) {
 					if ($row['member_count'] < $row['member_limit']) {
 						$success = JoinRoom($conn, $room_id, $response['id']);
 						

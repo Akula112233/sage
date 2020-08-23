@@ -1,7 +1,7 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 $host = 'mysql:host=database-1.clw2s8yue9sq.us-east-1.rds.amazonaws.com;dbname=mhacks_db';
 $user = 'admin';
@@ -26,7 +26,7 @@ while ($row = $stmt->fetch()) {
 }
 
 $room_list = ''
-foreach ($old_rooms as $index->$room) {
+foreach ($old_rooms as $index=>$room) {
 	$room_list .= $room.', ';
 }
 

@@ -1,7 +1,7 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 include_once(dirname(__DIR__).'/joinroom.php');
 
@@ -59,7 +59,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			
 			$stmt = $conn->prepare($stmt_string);
 			
-			unset($_POST[]);
+			unset($_POST['tags']);
 			
 			$success_1 = $stmt->execute($_POST);
 			
