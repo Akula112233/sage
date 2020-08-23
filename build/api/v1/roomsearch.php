@@ -64,7 +64,7 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 			$escaped_tags = array();
 			
 			foreach ($tags as $index=>$tag) {
-				$escaped_tags[$index] = mysql_real_escape_string($tag);
+				$escaped_tags[$index] = $conn->quote($tag);
 			}
 			
 			$stmt = $conn->prepare('SELECT r.* FROM discussion_rooms r JOIN room_tags t ON t.room_id = r.id WHERE t.tag IN (:tags) GROUP BY t.room_id');
